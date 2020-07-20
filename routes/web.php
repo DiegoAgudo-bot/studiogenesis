@@ -10,6 +10,7 @@
   | contains the "web" middleware group. Now create something great!
   |
  */
+Route::resource('products', 'ProductController'); 
 
 Route::get('/', 'MainController@login');
 Route::post('/checklogin', 'MainController@validateLogin');

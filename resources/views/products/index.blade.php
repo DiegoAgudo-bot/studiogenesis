@@ -35,32 +35,29 @@
         @endif
         <br />
         <div class="container box">
-            <h3 align="center"><strong>Manage contents</strong></h3>
+            <h3 align="center"><strong>Manage users</strong></h3>
             <h5 align="center">Welcome, <strong style="color: red;">{{ Auth::user()->email }}</strong></h5>
             <h5 align="center"><a href="{{ url('/logout') }}" class="center">Logout</a></h5>
-            <div id="box--small" >
-                <div class="options">
-                    <h4 align="center"><i class="fas fa-user-plus fa-2x"></i></h4>
-                </div>
-            </div>
-
-            <br>
-
-            <div id="box--small">
-                <div class="options">
-                    <h4 align="center"><i class="fas fa-plus fa-2x"></i></h4>
-                </div>
-            </div>
-
-            <br>
-
-            <div id="box--small">
-                <div class="options">
-                    <h4 align="center"><a href="{{ route('products.index') }}"><i class="fas fa-cart-plus fa-2x"></i></a></h4>
-                </div>
-            </div>
-
-            <br>
+            
+            <table class='table table-bordered' border-color='black'>
+                <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Detail</th>
+                    <th>Photo</th>
+                    <th>Category</th>
+                    <th>Rates</th>
+                </tr>
+                
+                @foreach($products as $key => $product)
+                <tr>
+                    <td>{{ ++$i }}</td>
+                    <td>{{ $product->name }}</td>
+                    <td>{{ $product->description}}</td>
+                </tr>
+                @endforeach
+            </table>
+            
         </div>
     </body>
 </html>
