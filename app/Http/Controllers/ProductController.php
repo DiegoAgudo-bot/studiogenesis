@@ -7,23 +7,21 @@ use App\Category;
 use App\Photo;
 use App\Relation_rates;
 use App\Rates;
-
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
-{
+class ProductController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $relation_rates = Relation_rates::latest()->simplePaginate(10);
-        $rates = Rates::latest()->simplePaginate(10);
-        $photo = Photo::latest()->simplePaginate(10);
-        $category = Category::latest()->simplePaginate(10);
-        $products = Product::latest()->simplePaginate(10);
+    public function index() {
+        $relation_rates = Relation_rates::all();
+        $rates = Rates::all();
+        $photo = Photo::all();
+        $category = Category::all();
+        $products = Product::all();
         return view('products.index', compact('products', 'category', 'photo', 'rates', 'relation_rates'))->with('c', (request()->input('page', 1) - 1) * 10);
     }
 
@@ -32,9 +30,10 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        $category = Category::all();
+        $rates = Rates::all();
+        return view('products.add', compact('category', 'rates'));
     }
 
     /**
@@ -43,9 +42,32 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'category' => 'required',
+            'rates' => 'required',
+            'photo' => 'required'
+        ]);
+
+        $product = Product::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'category' => $request->category,
+        ]);
+
+        Relation_rates::create([
+            'product_id' => $product->id,
+            'rates_id' => $request->rates,
+        ]);
+        
+        Photo::create([
+            'photo' => $request->photo,
+            'id_product' => $product->id,
+        ]);
+        
+        return redirect()->route('products.index')->with('success', 'Product created!');
     }
 
     /**
@@ -54,8 +76,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
-    {
+    public function show(Product $product) {
         //
     }
 
@@ -65,8 +86,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
-    {
+    public function edit(Product $product) {
         //
     }
 
@@ -77,8 +97,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
-    {
+    public function update(Request $request, Product $product) {
         //
     }
 
@@ -88,8 +107,8 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
-    {
+    public function destroy(Product $product) {
         //
     }
+
 }
