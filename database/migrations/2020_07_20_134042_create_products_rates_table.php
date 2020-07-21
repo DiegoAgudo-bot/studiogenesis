@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRelationRatesTable extends Migration
+class CreateProductsRatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateRelationRatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('relation_rates', function (Blueprint $table) {
+        Schema::create('product_rates', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->float('price');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreateRelationRatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('relation_rates');
+        Schema::dropIfExists('product_rates');
     }
 }

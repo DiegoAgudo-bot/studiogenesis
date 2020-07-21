@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Category;
+use App\Photo;
+use App\Relation_rates;
+use App\Rates;
+
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -14,8 +19,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::latest()->paginate(5);
-        return view('products.index', compact('products'))->with('i', (request()->input('page', 1) - 1) * 5);
+        $relation_rates = Relation_rates::latest()->simplePaginate(10);
+        $rates = Rates::latest()->simplePaginate(10);
+        $photo = Photo::latest()->simplePaginate(10);
+        $category = Category::latest()->simplePaginate(10);
+        $products = Product::latest()->simplePaginate(10);
+        return view('products.index', compact('products', 'category', 'photo', 'rates', 'relation_rates'))->with('c', (request()->input('page', 1) - 1) * 10);
     }
 
     /**
