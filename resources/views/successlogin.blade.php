@@ -40,7 +40,7 @@
             <h5 align="center"><a href="{{ url('/logout') }}" class="center">Logout</a></h5>
             <div id="box--small" >
                 <div class="options">
-                    <h4 align="center"><i class="fas fa-user-plus fa-2x"></i></h4>
+                    <h4 align="center"><a href=""><i class="fas fa-user-plus fa-2x"></i></a></h4>
                 </div>
             </div>
 
@@ -48,7 +48,7 @@
 
             <div id="box--small">
                 <div class="options">
-                    <h4 align="center"><i class="fas fa-plus fa-2x"></i></h4>
+                    <h4 align="center"><a href="{{ route('category.index') }}"><i class="fas fa-plus fa-2x"></i></a></h4>
                 </div>
             </div>
 

@@ -87,7 +87,9 @@ class ProductController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit(Product $product) {
-        //
+        $category = Category::all();
+        $rates = Rates::all();
+        return view('products.edit', compact('product', 'category', 'rates'));
     }
 
     /**
@@ -98,7 +100,30 @@ class ProductController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Product $product) {
-        //
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'category' => 'required',
+            'rates' => 'required',
+        ]);
+
+        $product->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'category' => $request->category,
+        ]);
+
+       Relation_rates::where('product_id', '=', $product->id)->update([
+            'product_id' => $product->id,
+            'rates_id' => $request->rates,
+        ]);
+        
+        $photo = Photo::where('id_product', '=', $product->id)->update([
+            'photo' => $request->photo,
+            'id_product' => $product->id,
+        ]);
+        
+        return redirect()->route('products.index')->with('success', 'Product edited!');
     }
 
     /**
@@ -108,7 +133,9 @@ class ProductController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Product $product) {
-        //
+      $product->delete();
+      
+      return redirect()->route('products.index')->with('success', 'Product deleted!');
     }
 
 }

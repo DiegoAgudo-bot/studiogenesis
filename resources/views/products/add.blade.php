@@ -1,7 +1,21 @@
-@extends('products.layout')
+@extends('layout')
+
+@section('title')
+    <h3 align="center"><strong>Manage products</strong></h3>
+@endsection
 
 @section('content')
 <h5 align="center"><a href="{{ url('/logout') }}" class="center">Logout</a> · <a href="{{ route('products.index') }}" class="center">Back to products</a> · <a href="{{ url('/main') }}" class="center">Back to menu</a></h5>
+
+@if (count($errors) > 0)
+<div class="alert alert-danger">
+    <ul>
+        @foreach($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 
 <form action="{{ route('products.store') }}" method="POST">
     @csrf
@@ -36,10 +50,10 @@
                     <option value="{{ $category->id }}">{{$category->name }}</option>
                     @endforeach
                 </select>
-                
+
             </div>
         </div>
-        
+
         <div class='col-lg-12'>
             <div class="form-group">
                 <strong>Rates</strong>
@@ -51,7 +65,7 @@
                 </select>
             </div>
         </div>
-        
+
         <div class='col-lg-12'>
             <button type='submit' class='btn btn-primary'>Create</button>
         </div>

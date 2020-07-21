@@ -35,7 +35,7 @@
         @endif
         <br />
         <div class="container box">
-            <h3 align="center"><strong>Manage products</strong></h3>
+            @yield('title')
             <h5 align="center">Welcome, <strong style="color: red;">{{ Auth::user()->email }}</strong></h5>
             @yield('content')
          </div>

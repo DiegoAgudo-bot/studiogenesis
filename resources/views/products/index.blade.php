@@ -1,4 +1,8 @@
-@extends('products.layout')
+@extends('layout')
+
+@section('title')
+    <h3 align="center"><strong>Manage products</strong></h3>
+@endsection
 
 @section('content')
 <h5 align="center">
@@ -14,6 +18,7 @@
         <strong>{{ $message }}</strong>
     </div>
     @endif
+    
 </h5>
 
 <table class='table table-bordered' border-color='black'>
@@ -64,8 +69,16 @@
         if(!$aux){
             echo '<td></td>';
         }
-        
-        echo '<td><a class="btn btn-primary" href="edit">Edit</a><a class="btn btn-info" href="edit">Delete</a></td>';
+        @endphp
+        <td>
+            <a class="btn btn-primary" href="{{ route("products.edit", $product->id )}}">Edit</a>
+            <form action="{{ route('products.destroy', $product->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type='submit' class='btn btn-danger'>Delete</button>
+            </form>
+        </td>
+        @php
     }
         @endphp
         
