@@ -52,21 +52,23 @@ class ProductController extends Controller {
         ]);
 
         $product = Product::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'category' => $request->category,
+                    'name' => $request->name,
+                    'description' => $request->description,
+                    'category' => $request->category,
         ]);
 
         Relation_rates::create([
             'product_id' => $product->id,
             'rates_id' => $request->rates,
         ]);
-        
-        Photo::create([
-            'photo' => $request->photo,
-            'id_product' => $product->id,
-        ]);
-        
+
+        if ($request->photo) {
+            Photo::create([
+                'photo' => $request->photo,
+                'id_product' => $product->id,
+            ]);
+        }
+
         return redirect()->route('products.index')->with('success', 'Product created!');
     }
 
@@ -113,16 +115,17 @@ class ProductController extends Controller {
             'category' => $request->category,
         ]);
 
-       Relation_rates::where('product_id', '=', $product->id)->update([
+        Relation_rates::where('product_id', '=', $product->id)->update([
             'product_id' => $product->id,
             'rates_id' => $request->rates,
         ]);
-        
-        $photo = Photo::where('id_product', '=', $product->id)->update([
-            'photo' => $request->photo,
-            'id_product' => $product->id,
-        ]);
-        
+        if ($request->photo) {
+            $photo = Photo::where('id_product', '=', $product->id)->update([
+                'photo' => $request->photo,
+                'id_product' => $product->id,
+            ]);
+        }
+
         return redirect()->route('products.index')->with('success', 'Product edited!');
     }
 
@@ -133,9 +136,9 @@ class ProductController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Product $product) {
-      $product->delete();
-      
-      return redirect()->route('products.index')->with('success', 'Product deleted!');
+        $product->delete();
+
+        return redirect()->route('products.index')->with('success', 'Product deleted!');
     }
 
 }

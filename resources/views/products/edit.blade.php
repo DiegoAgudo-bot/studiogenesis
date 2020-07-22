@@ -57,7 +57,7 @@
         </div>
         
         <div class='col-lg-12'>
-            <button type='submit' class='btn btn-primary'>Create</button>
+            <button type='submit' class='btn btn-primary'>Edit</button>
         </div>
     </div>
 </form>

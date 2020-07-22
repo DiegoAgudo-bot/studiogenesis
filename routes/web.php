@@ -12,6 +12,7 @@
  */
 Route::resource('products', 'ProductController'); 
 Route::resource('category', 'CategoryController'); 
+Route::resource('users', 'UserController'); 
 
 Route::get('/', 'MainController@login');
 Route::post('/checklogin', 'MainController@validateLogin');

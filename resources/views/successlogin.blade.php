@@ -40,7 +40,7 @@
             <h5 align="center"><a href="{{ url('/logout') }}" class="center">Logout</a></h5>
             <div id="box--small" >
                 <div class="options">
-                    <h4 align="center"><a href=""><i class="fas fa-user-plus fa-2x"></i></a></h4>
+                    <h4 align="center"><a href="{{ route('users.index') }}"><i class="fas fa-user-plus fa-2x"></i></a></h4>
                 </div>
             </div>
 
