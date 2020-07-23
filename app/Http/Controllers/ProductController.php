@@ -7,6 +7,7 @@ use App\Category;
 use App\Photo;
 use App\Relation_rates;
 use App\Rates;
+use App\Relation_categories;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller {
@@ -18,11 +19,12 @@ class ProductController extends Controller {
      */
     public function index() {
         $relation_rates = Relation_rates::all();
+        $relation_categories = Relation_categories::all();
         $rates = Rates::all();
         $photo = Photo::all();
         $category = Category::all();
         $products = Product::all();
-        return view('products.index', compact('products', 'category', 'photo', 'rates', 'relation_rates'))->with('c', (request()->input('page', 1) - 1) * 10);
+        return view('products.index', compact('products', 'category', 'photo', 'rates', 'relation_rates', 'relation_categories'))->with('c', (request()->input('page', 1) - 1) * 10);
     }
 
     /**
@@ -53,10 +55,14 @@ class ProductController extends Controller {
 
         $product = Product::create([
                     'name' => $request->name,
-                    'description' => $request->description,
-                    'category' => $request->category,
+                    'description' => $request->description
         ]);
 
+        Relation_categories::create([
+            'product_id' => $product->id,
+            'category_id' => $request->category,
+        ]);
+        
         Relation_rates::create([
             'product_id' => $product->id,
             'rates_id' => $request->rates,
@@ -111,16 +117,21 @@ class ProductController extends Controller {
 
         $product->update([
             'name' => $request->name,
-            'description' => $request->description,
-            'category' => $request->category,
+            'description' => $request->description
         ]);
 
+        Relation_categories::where('product_id', '=', $product->id)->update([
+            'product_id' => $product->id,
+            'category_id' => $request->category,
+        ]);
+        
         Relation_rates::where('product_id', '=', $product->id)->update([
             'product_id' => $product->id,
             'rates_id' => $request->rates,
         ]);
+        
         if ($request->photo) {
-            $photo = Photo::where('id_product', '=', $product->id)->update([
+            Photo::where('id_product', '=', $product->id)->update([
                 'photo' => $request->photo,
                 'id_product' => $product->id,
             ]);

@@ -18,10 +18,12 @@
         <div class="container box">
             <h3 align="center">Diego Agudo</h3><br />
 
+            {{-- If user is already logged, jump to menu --}}
             @if(isset(Auth::user()->email))
             <script>window.location = "/successlogin";</script>
             @endif
 
+            {{-- If user fails to log in, return the errors --}}
             @if ($message = Session::get('error'))
             <div class="alert alert-danger alert-block">
                 <button type="button" class="close" data-dismiss="alert">×</button>
@@ -38,7 +40,7 @@
                 </ul>
             </div>
             @endif
-
+            {{-- Simple login form --}}
             <form method="post" action="{{ url('/checklogin') }}">
                 {{ csrf_field() }}
                 <div class="form-group">

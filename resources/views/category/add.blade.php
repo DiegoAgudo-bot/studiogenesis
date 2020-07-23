@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('title')
-    <h3 align="center"><strong>Manage products</strong></h3>
+    <h3 align="center"><strong>Manage categories</strong></h3>
 @endsection
 
 @section('content')

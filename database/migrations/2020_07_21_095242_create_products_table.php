@@ -17,7 +17,6 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
-            $table->bigInteger('category')->unsigned();
             $table->foreign('category')->references('id')->on('categories');
             $table->timestamps();
         });

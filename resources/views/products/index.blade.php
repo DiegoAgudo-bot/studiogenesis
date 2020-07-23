@@ -51,11 +51,17 @@
             echo '<td>No image available</td>';
         }
         
-        for($i = 0; $i < sizeof($category); $i++){
-            if ($product->category == $category[$i]->id) {
-                echo "<td>". $category[$i]->name . "</td>";
+        echo '<td>';
+            
+        for($g = 0; $g < sizeof($relation_categories); $g++){
+            for($i = 0; $i < sizeof($category); $i++){
+                if ($relation_categories[$g]->category_id == $category[$i]->id && $relation_categories[$g]->product_id == $product->id) {
+                    echo $category[$i]->name . "<br>";
+                }
             }
         }
+        
+         echo '</td>';
         
         $aux = false;
         for($i = 0; $i < sizeof($relation_rates); $i++){

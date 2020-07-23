@@ -38,6 +38,8 @@
             <h3 align="center"><strong>Manage contents</strong></h3>
             <h5 align="center">Welcome, <strong style="color: red;">{{ Auth::user()->email }}</strong></h5>
             <h5 align="center"><a href="{{ url('/logout') }}" class="center">Logout</a></h5>
+            
+            {{-- Thanks to web.php, we can set custom routes --}}
             <div id="box--small" >
                 <div class="options">
                     <h4 align="center"><a href="{{ route('users.index') }}"><i class="fas fa-user-plus fa-2x"></i></a></h4>
